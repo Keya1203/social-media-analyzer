@@ -1,3 +1,7 @@
+# social-media-analyzer
+social-media-analyzer
+>>>>>>> a95b3aa8606c9f8a11e72dd0ac1126d7e92adddb
+=======
 # Social Media Content Analyzer
 
 A modern web application that analyzes social media content by extracting text from uploaded PDFs and images, providing actionable insights to improve engagement.
@@ -142,3 +146,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 📞 Support
 
 For questions or support, please open an issue on GitHub.
+=======
+# social-media-analyzer
+social-media-analyzer
+>>>>>>> a95b3aa8606c9f8a11e72dd0ac1126d7e92adddb
