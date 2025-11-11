@@ -1,0 +1,34 @@
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const cors = require('cors');
+const { parseFileAndAnalyze } = require('./ocrUtils');
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const upload = multer({
+  dest: path.join(__dirname, 'uploads/'),
+  limits: { fileSize: 15 * 1024 * 1024 } // 15 MB limit
+});
+
+
+app.get('/api/ping', (req, res) => res.json({ ok: true }));
+
+
+app.post('/api/upload', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+
+    const result = await parseFileAndAnalyze(req.file.path, req.file.mimetype);
+    
+    res.json(result);
+  } catch (err) {
+    console.error('Upload error', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
