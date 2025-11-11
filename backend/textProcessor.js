@@ -34,11 +34,8 @@ async function extractTextFromPDF(filePath) {
  * @returns {string} Extracted text
  */
 async function extractTextFromImage(filePath) {
-  const worker = createWorker({
-    logger: m => {} // Silent logger; can be enabled for debugging
-  });
+  const worker = createWorker();
   try {
-    await worker.load();
     await worker.loadLanguage('eng');
     await worker.initialize('eng');
     const { data: { text } } = await worker.recognize(filePath);
@@ -46,7 +43,9 @@ async function extractTextFromImage(filePath) {
   } catch (error) {
     throw new Error('Failed to extract text from image: ' + error.message);
   } finally {
-    await worker.terminate();
+    if (worker && typeof worker.terminate === 'function') {
+      await worker.terminate();
+    }
   }
 }
 
@@ -117,12 +116,8 @@ async function processAndEvaluateContent(filePath, mimetype) {
     } else if (mimetype.startsWith('image/') || /\.(png|jpe?g|bmp|tiff)$/i.test(filePath)) {
       text = await extractTextFromImage(filePath);
     } else {
-      // Fallback: try PDF first, then OCR
-      try {
-        text = await extractTextFromPDF(filePath);
-      } catch {
-        text = await extractTextFromImage(filePath);
-      }
+      // For text files, read directly
+      text = await fs.readFile(filePath, 'utf8');
     }
 
     // Perform analysis
