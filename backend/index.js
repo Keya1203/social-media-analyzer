@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const cors = require('cors');
-const { parseFileAndAnalyze } = require('./ocrUtils');
+const { processAndEvaluateContent } = require('./textProcessor');
 
 const app = express();
 app.use(cors());
@@ -21,7 +21,7 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
 
-    const result = await parseFileAndAnalyze(req.file.path, req.file.mimetype);
+    const result = await processAndEvaluateContent(req.file.path, req.file.mimetype);
     
     res.json(result);
   } catch (err) {
