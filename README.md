@@ -2,9 +2,10 @@
 
 A modern web application that analyzes social media content by extracting text from uploaded PDFs and images, providing actionable insights to improve engagement.
 
-## ✅ Live Demo
+## 🌐 Live Project
 
-- Deployment: _Pending_
+Frontend (Vercel): https://frontend-eygumuxut-keya-patels-projects.vercel.app  
+Backend: Runs locally (Render is chargeable; instructions below)
 
 ## 🚀 Features
 
@@ -153,9 +154,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 For questions or support, please open an issue on GitHub.
 
-## Approach (≤200 words)
+## 🧠 Project Approach Summary
 
-The final solution uses a React 18 frontend backed by an Express API so heavy parsing happens server-side while the UI stays responsive. Uploads flow through Multer to a processing pipeline that differentiates PDFs and images: PDFs use `pdf-parse` for structured extraction, images go through Tesseract.js with a managed worker lifecycle and cached language data. Extracted text is normalized and analyzed for sentiment, CTA coverage, hashtags, and keyword frequency to produce an engagement score plus targeted suggestions. The frontend focuses on accessibility and clarity with drag-and-drop upload, loading states, and actionable summaries rendered by modular components. Error handling spans both tiers, surfacing user-friendly messages while logging server details for debugging. The architecture keeps the door open for future enhancements like additional languages or cloud deployment while meeting the assessment constraints within the allotted time.
+This project extracts text from PDF or image uploads and performs sentiment analysis to suggest engagement improvements. It uses pdf-parse for PDFs and Tesseract.js for OCR image text extraction. The frontend, built with React, provides drag-and-drop upload and real-time feedback, while the backend (Node + Express) processes files and runs the analysis logic. Proper error handling and loading states ensure a smooth UX. The project demonstrates AI/ML-based text processing implemented with clean, production-ready code.
 
 ## 🧪 Testing
 
