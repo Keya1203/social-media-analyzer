@@ -6,6 +6,9 @@ backend/uploads/
 uploads/
 dist/
 build/
+.vercel
+.vercel/
+frontend/.vercel/
 .next/
 .DS_Store
 .vscode/

@@ -2,14 +2,18 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const cors = require('cors');
+const fs = require('fs');
 const { processAndEvaluateContent } = require('./textProcessor');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+const uploadsDir = path.join(__dirname, 'uploads');
+fs.mkdirSync(uploadsDir, { recursive: true });
+
 const upload = multer({
-  dest: path.join(__dirname, 'uploads/'),
+  dest: uploadsDir,
   limits: { fileSize: 15 * 1024 * 1024 } // 15 MB limit
 });
 
