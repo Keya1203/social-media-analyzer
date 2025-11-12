@@ -1,10 +1,10 @@
-# social-media-analyzer
-social-media-analyzer
->>>>>>> a95b3aa8606c9f8a11e72dd0ac1126d7e92adddb
-=======
 # Social Media Content Analyzer
 
 A modern web application that analyzes social media content by extracting text from uploaded PDFs and images, providing actionable insights to improve engagement.
+
+## ✅ Live Demo
+
+- Deployment: _Pending_
 
 ## 🚀 Features
 
@@ -55,6 +55,8 @@ The application will be available at:
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:5001
 
+To point the React app at a different backend origin in development or production, set `REACT_APP_API_BASE_URL` in `.env.local` (for example, `REACT_APP_API_BASE_URL=https://your-api.example.com`).
+
 ## 📁 Project Structure
 
 ```
@@ -76,6 +78,10 @@ social-media-analyzer/
 ├── APPROACH.md
 └── .gitignore
 ```
+
+## 🧱 Legacy Prototype
+
+The repository still includes the original static prototype under `legacy-static-prototype/`. It remains for reference only—the production experience runs through the React frontend and Express API described above.
 
 ## 🔧 API Endpoints
 
@@ -146,7 +152,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 📞 Support
 
 For questions or support, please open an issue on GitHub.
-=======
-# social-media-analyzer
-social-media-analyzer
->>>>>>> a95b3aa8606c9f8a11e72dd0ac1126d7e92adddb
+
+## Approach (≤200 words)
+
+The final solution uses a React 18 frontend backed by an Express API so heavy parsing happens server-side while the UI stays responsive. Uploads flow through Multer to a processing pipeline that differentiates PDFs and images: PDFs use `pdf-parse` for structured extraction, images go through Tesseract.js with a managed worker lifecycle and cached language data. Extracted text is normalized and analyzed for sentiment, CTA coverage, hashtags, and keyword frequency to produce an engagement score plus targeted suggestions. The frontend focuses on accessibility and clarity with drag-and-drop upload, loading states, and actionable summaries rendered by modular components. Error handling spans both tiers, surfacing user-friendly messages while logging server details for debugging. The architecture keeps the door open for future enhancements like additional languages or cloud deployment while meeting the assessment constraints within the allotted time.
+
+## 🧪 Testing
+
+- Backend: `cd backend && npm test` _(placeholder — add real automated coverage alongside future enhancements)_
+- Frontend: `cd frontend && npm test`

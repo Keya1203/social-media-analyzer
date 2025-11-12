@@ -1,5 +1,6 @@
 // backend/textProcessor.js
 const fs = require('fs').promises;
+const path = require('path');
 const pdf = require('pdf-parse');
 const { createWorker } = require('tesseract.js');
 
@@ -12,6 +13,18 @@ const STOPWORDS = [
 // Expanded positive/negative word lists for sentiment analysis
 const POSITIVE_WORDS = ['good', 'great', 'excellent', 'happy', 'love', 'like', 'success', 'improve', 'positive', 'best', 'awesome', 'amazing', 'fantastic', 'wonderful', 'brilliant', 'perfect', 'outstanding', 'superb', 'delightful', 'joyful', 'pleased', 'satisfied', 'thrilled', 'excited', 'proud', 'grateful', 'blessed', 'fortunate', 'lucky', 'cheerful'];
 const NEGATIVE_WORDS = ['bad', 'poor', 'failed', 'sad', 'hate', 'problem', 'negative', 'worse', 'issue', 'angry', 'terrible', 'awful', 'horrible', 'disgusting', 'annoying', 'frustrating', 'disappointing', 'upset', 'worried', 'stressed', 'depressed', 'miserable', 'unhappy', 'dissatisfied', 'regretful', 'sorry', 'guilty', 'ashamed', 'embarrassed', 'humiliated'];
+
+const TESSERACT_CACHE_DIR = path.join(__dirname, '.tesseract-cache');
+
+async function ensureDir(dir) {
+  try {
+    await fs.mkdir(dir, { recursive: true });
+  } catch (error) {
+    if (error.code !== 'EEXIST') {
+      throw error;
+    }
+  }
+}
 
 /**
  * Extracts text from PDF files
@@ -34,8 +47,13 @@ async function extractTextFromPDF(filePath) {
  * @returns {string} Extracted text
  */
 async function extractTextFromImage(filePath) {
-  const worker = createWorker();
+  await ensureDir(TESSERACT_CACHE_DIR);
+  const worker = createWorker({
+    langPath: path.join(__dirname),
+    cachePath: TESSERACT_CACHE_DIR
+  });
   try {
+    await worker.load();
     await worker.loadLanguage('eng');
     await worker.initialize('eng');
     const { data: { text } } = await worker.recognize(filePath);
